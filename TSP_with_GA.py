@@ -395,6 +395,32 @@ def er_crossover(parent1,parent2,crossover_rate):
     else:
         return parent1,parent2
 
+
+def a_star_crossover(route1, route2,num): #임의의 난수 뽑아서 인덱스 순으로 정렬 route1,route2는 경로2개이고 num은 997개의 점중에 몇개를 바꿀건지정하는 정수
+    sort_list = []
+    zero_node = Node(0,0,-1)
+    index_num = random.randint(1,997-num)
+    for i in range(index_num, index_num+num):
+        sort_list.append(route1.city_route[i])
+    
+    sort_list.sort(key = lambda x :x.get_index()+2*x.uclid_distance(zero_node))
+
+    for i in range(0,num):
+        route1.city_route[i] = sort_list[i]
+
+    sort_list2 = []
+    index_num = random.randint(1,997-num)
+
+    for i in range(index_num, index_num+num):
+        sort_list2.append(route2.city_route[i])
+    
+    sort_list2.sort(key = lambda x :x.get_index()+2*x.uclid_distance(zero_node))
+
+    for i in range(0,num):
+        route2.city_route[i] = sort_list2[i]
+    
+    
+
 ################ Mutation ################
 def mutation(individual, mutation_rate):
     return notequal_mutation(individual, mutation_rate)
